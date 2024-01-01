@@ -8,9 +8,18 @@ import java.util.*;
 public class FluxStarterService {
 
 	
-	public Flux<String> getUsersData()
-	{
-		return Flux.fromIterable(List.of("ram","sham","jagan")).log();
+//	public Flux<String> getUsersData()
+//	{
+////		return Flux.fromIterable(List.of("ram","sham","jagan")).log();
+//		var a= Flux.fromIterable(List.of("ram","sham","jagan")).map(data-> System.out.println("from fun user is "+ "flux user-> "));
+//	}
+
+	public Flux<String> getFilteredUsersData(){
+		return Flux.fromIterable(
+				List.of("ram","sham","jagan","mohan")
+				.map(data-> data.toUppercase())
+				.filter(data-> {data.length()>3};)
+				.log();
 	}
 	
 	public Mono<String> getSingleUserData()
@@ -27,6 +36,8 @@ public class FluxStarterService {
 		System.out.println("------------------");
 		f.getSingleUserData().subscribe(monoData-> {System.out.println("user is "+ "mono user-> "+monoData); 	});
 		
+		System.out.println("------------------");
+		f.getFilteredUsersData().subscribe(fluxData-> {System.out.println("user is "+ "flux filtered user-> "+ fluxData); 	});
 		
 	}
 }
